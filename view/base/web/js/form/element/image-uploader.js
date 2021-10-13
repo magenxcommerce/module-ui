@@ -11,7 +11,8 @@ define([
     'Magento_Ui/js/modal/alert',
     'Magento_Ui/js/lib/validation/validator',
     'Magento_Ui/js/form/element/file-uploader',
-    'mage/adminhtml/browser'
+    'mage/adminhtml/browser',
+    'mage/adminhtml/tools'
 ], function ($, _, utils, uiAlert, validator, Element, browser) {
     'use strict';
 
@@ -78,18 +79,10 @@ define([
                 '/type/image/?isAjax=true';
 
             if (this.mediaGallery.initialOpenSubpath) {
-                openDialogUrl += '&current_tree_path=' + Base64.idEncode(this.mediaGallery.initialOpenSubpath);
+                openDialogUrl += '&current_tree_path=' + Base64.mageEncode(this.mediaGallery.initialOpenSubpath);
             }
 
-            browser.openDialog(
-                openDialogUrl,
-                null,
-                null,
-                this.mediaGallery.openDialogTitle,
-                {
-                    targetElementId: $buttonEl.attr('id')
-                }
-            );
+            browser.openDialog(openDialogUrl, null, null, this.mediaGallery.openDialogTitle);
         },
 
         /**

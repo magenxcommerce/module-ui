@@ -3,22 +3,20 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
-declare(strict_types=1);
-
 namespace Magento\Ui\Test\Unit\Component;
 
+use Magento\Ui\Component\Paging;
 use Magento\Framework\TestFramework\Unit\Helper\ObjectManager;
 use Magento\Framework\View\Element\UiComponent\ContextInterface;
 use Magento\Framework\View\Element\UiComponent\DataProvider\DataProviderInterface;
-use Magento\Framework\View\Element\UiComponent\Processor;
-use Magento\Ui\Component\Paging;
-use PHPUnit\Framework\MockObject\MockObject;
-use PHPUnit\Framework\TestCase;
 
-class PagingTest extends TestCase
+/**
+ * Class PagingTest
+ */
+class PagingTest extends \PHPUnit\Framework\TestCase
 {
     /**
-     * @var ContextInterface|MockObject
+     * @var ContextInterface|\PHPUnit_Framework_MockObject_MockObject
      */
     protected $contextMock;
 
@@ -30,12 +28,12 @@ class PagingTest extends TestCase
     /**
      * Set up
      */
-    protected function setUp(): void
+    protected function setUp()
     {
         $this->objectManager = new ObjectManager($this);
 
         $this->contextMock = $this->getMockForAbstractClass(
-            ContextInterface::class,
+            \Magento\Framework\View\Element\UiComponent\ContextInterface::class,
             [],
             '',
             false,
@@ -55,14 +53,14 @@ class PagingTest extends TestCase
         $this->contextMock->expects($this->never())->method('getProcessor');
         /** @var Paging $listing */
         $paging = $this->objectManager->getObject(
-            Paging::class,
+            \Magento\Ui\Component\Paging::class,
             [
                 'context' => $this->contextMock,
                 'data' => []
             ]
         );
 
-        $this->assertSame(Paging::NAME, $paging->getComponentName());
+        $this->assertTrue($paging->getComponentName() === Paging::NAME);
     }
 
     /**
@@ -72,7 +70,7 @@ class PagingTest extends TestCase
      */
     public function testPrepare()
     {
-        $processor = $this->getMockBuilder(Processor::class)
+        $processor = $this->getMockBuilder(\Magento\Framework\View\Element\UiComponent\Processor::class)
             ->disableOriginalConstructor()
             ->getMock();
         $this->contextMock->expects($this->atLeastOnce())->method('getProcessor')->willReturn($processor);
@@ -83,11 +81,31 @@ class PagingTest extends TestCase
             ],
             'config' => [
                 'options' => [
-                    'options1' => [
+                    [
+                        'value' => 20,
+                        'label' => 20
+                    ],
+                    [
+                        'value' => 30,
+                        'label' => 30
+                    ],
+                    [
+                        'value' => 50,
+                        'label' => 50
+                    ],
+                    [
+                        'value' => 100,
+                        'label' => 100
+                    ],
+                    [
+                        'value' => 200,
+                        'label' => 200
+                    ],
+                    [
                         'value' => 20,
                         'label' => 'options1'
                     ],
-                    'options2' => [
+                    [
                         'value' => 40,
                         'label' => 'options2'
                     ],
@@ -99,7 +117,7 @@ class PagingTest extends TestCase
 
         /** @var Paging $paging */
         $paging = $this->objectManager->getObject(
-            Paging::class,
+            \Magento\Ui\Component\Paging::class,
             [
                 'context' => $this->contextMock,
                 'data' => [
@@ -124,9 +142,8 @@ class PagingTest extends TestCase
                 ]
             ]
         );
-        /** @var DataProviderInterface|MockObject $dataProviderMock */
-        $dataProviderMock = $this->getMockBuilder(DataProviderInterface::class)
-            ->getMockForAbstractClass();
+        /** @var DataProviderInterface|\PHPUnit_Framework_MockObject_MockObject $dataProviderMock */
+        $dataProviderMock = $this->getMockBuilder(DataProviderInterface::class)->getMockForAbstractClass();
 
         $this->contextMock->expects($this->once())
             ->method('getRequestParam')

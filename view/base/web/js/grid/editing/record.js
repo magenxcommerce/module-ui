@@ -141,7 +141,7 @@ define([
         },
 
         /**
-         * Creates fields for the specified columns.
+         * Creates fields for the specfied columns.
          *
          * @param {Array} columns - An array of column instances.
          * @returns {Record} Chainable.
@@ -264,7 +264,7 @@ define([
         /**
          * Validates all of the available fields.
          *
-         * @returns {Array} An array with validation results.
+         * @returns {Array} An array with validatation results.
          */
         validate: function () {
             return this.elems.map('validate');
@@ -280,7 +280,7 @@ define([
         },
 
         /**
-         * Counts total errors amount across all fields.
+         * Counts total errors ammount accros all fields.
          *
          * @returns {Number}
          */
@@ -306,7 +306,7 @@ define([
         },
 
         /**
-         * Updates 'fields' array filling it with available editors
+         * Updates 'fields' array filling it with available edtiors
          * or with column instances if associated field is not present.
          *
          * @returns {Record} Chainable.

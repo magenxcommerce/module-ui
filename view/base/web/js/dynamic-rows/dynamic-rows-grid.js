@@ -34,15 +34,6 @@ define([
         },
 
         /**
-         * @inheritdoc
-         */
-        initialize: function () {
-            this.setToInsertData = _.debounce(this.setToInsertData, 200);
-
-            return this._super();
-        },
-
-        /**
          * Calls 'initObservable' of parent
          *
          * @returns {Object} Chainable.

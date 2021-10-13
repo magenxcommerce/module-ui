@@ -16,8 +16,7 @@ define([
     'Magento_Ui/js/form/element/abstract',
     'mage/backend/notification',
     'mage/translate',
-    'jquery/file-uploader',
-    'mage/adminhtml/tools'
+    'jquery/file-uploader'
 ], function ($, _, utils, uiAlert, validator, Element, notification, $t) {
     'use strict';
 
@@ -325,7 +324,7 @@ define([
 
         /**
          * Handler which is invoked when files are choosed for upload.
-         * May be used for implementation of additional validation rules,
+         * May be used for implementation of aditional validation rules,
          * e.g. total files and a total size rules.
          *
          * @param {Event} e - Event object.
@@ -348,12 +347,6 @@ define([
             var file     = data.files[0],
                 allowed  = this.isFileAllowed(file),
                 target   = $(e.target);
-
-            if (this.disabled()) {
-                this.notifyError($t('The file upload field is disabled.'));
-
-                return;
-            }
 
             if (allowed.passed) {
                 target.on('fileuploadsend', function (event, postData) {
@@ -435,10 +428,9 @@ define([
                          * @param {String} constructedMessage
                          */
                         insertMethod: function (constructedMessage) {
-                            var escapedFileName = $('<div>').text(error.filename).html(),
-                                errorMsgBodyHtml = '<strong>%s</strong> %s.<br>'
-                                    .replace('%s', escapedFileName)
-                                    .replace('%s', $t('was not uploaded'));
+                            var errorMsgBodyHtml = '<strong>%s</strong> %s.<br>'
+                                .replace('%s', error.filename)
+                                .replace('%s', $t('was not uploaded'));
 
                             // html is escaped in message body for notification widget; prepend unescaped html here
                             constructedMessage = constructedMessage.replace('%s', errorMsgBodyHtml);

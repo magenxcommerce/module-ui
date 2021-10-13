@@ -36,7 +36,7 @@
             class="action-select admin__action-multiselect"
             data-role="advanced-select"
             data-bind="
-            css: {_active: listVisible},
+            css: {_active: multiselectFocus},
             click: function(data, event) {
                 toggleListVisible(data, event)
             }
@@ -73,7 +73,7 @@
             class="action-select admin__action-multiselect"
             data-role="advanced-select"
             data-bind="
-            css: {_active: listVisible},
+            css: {_active: multiselectFocus},
             click: function(data, event) {
                 toggleListVisible(data, event)
             }
@@ -160,7 +160,7 @@
                         css: {
                             _selected: $parent.isSelectedValue(option),
                             _hover: $parent.isHovered(option, $element),
-                            _expended: $parent.getLevelVisibility($data) && $parent.showLevels($data),
+                            _expended: $parent.getLevelVisibility($data),
                             _unclickable: $parent.isLabelDecoration($data),
                             _last: $parent.addLastElement($data),
                             '_with-checkbox': $parent.showCheckbox
@@ -174,7 +174,6 @@
                     <div class="admin__action-multiselect-dropdown"
                          data-bind="
                             click: function(event){
-                                $parent.showLevels($data);
                                 $parent.openChildLevel($data, $element, event);
                             },
                             clickBubble: false

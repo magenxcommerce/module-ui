@@ -188,8 +188,7 @@ define([
 
             result = {
                 items: this.getByIds(request.ids),
-                totalRecords: request.totalRecords,
-                errorMessage: request.errorMessage
+                totalRecords: request.totalRecords
             };
 
             delay ?
@@ -200,7 +199,7 @@ define([
         },
 
         /**
-         * Caches requests object with provided parameters
+         * Caches requests object with provdided parameters
          * and data object associated with it.
          *
          * @param {Object} data - Data associated with request.
@@ -217,8 +216,7 @@ define([
             this._requests.push({
                 ids: this.getIds(data.items),
                 params: params,
-                totalRecords: data.totalRecords,
-                errorMessage: data.errorMessage
+                totalRecords: data.totalRecords
             });
 
             return this;

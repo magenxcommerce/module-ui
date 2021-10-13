@@ -44,7 +44,7 @@ define([
 
         /**
          * Calls parent's initElement method.
-         * Assigns callbacks on various events of incoming element.
+         * Assignes callbacks on various events of incoming element.
          * @param  {Object} elem
          * @return {Object} - reference to instance
          */

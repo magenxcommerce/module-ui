@@ -543,7 +543,6 @@ define([
                     data = this.createHeaderTemplate(cell.config);
                     cell.config.labelVisible = false;
                     _.extend(data, {
-                        defaultLabelVisible: data.visible(),
                         label: cell.config.label,
                         name: cell.name,
                         required: !!cell.config.validation,

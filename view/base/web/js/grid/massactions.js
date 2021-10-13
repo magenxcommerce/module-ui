@@ -95,7 +95,7 @@ define([
         },
 
         /**
-         * Adds new action. If action with a specified identifier
+         * Adds new action. If action with a specfied identifier
          * already exists, than the original one will be overrided.
          *
          * @param {Object} action - Action object.

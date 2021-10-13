@@ -42,7 +42,7 @@ define([
     /**
      * Document click handler which in case if event target is not
      * a descendant of provided container element,
-     * invokes specified in configuration callback.
+     * invokes specfied in configuration callback.
      *
      * @param {HTMLElement} container
      * @param {Object} config

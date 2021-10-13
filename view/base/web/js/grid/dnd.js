@@ -406,7 +406,7 @@ define([
          *
          * @param {Number} x - X coordinate of a grabbed point.
          * @param {Number} y - Y coordinate of a grabbed point.
-         * @param {HTMLElement} elem - Grabbed element.
+         * @param {HTMLElement} elem - Grabbed elemenet.
          */
         grab: function (x, y, elem) {
             this.initDrag = true;

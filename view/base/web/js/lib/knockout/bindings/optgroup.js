@@ -222,14 +222,10 @@ define([
                     ko.utils.setTextContent(option, allBindings.get('optionsCaption'));
                     ko.selectExtensions.writeValue(option, undefined);
                 } else if (typeof arrayEntry[optionsValue] === 'undefined') { // empty value === optgroup
-                    if (arrayEntry.__disableTmpl) {
-                        option = '<optgroup label="' + arrayEntry[optionsText] + '"></optgroup>';
-                    } else {
-                        option = utils.template(optgroupTmpl, {
-                            label: arrayEntry[optionsText],
-                            title: arrayEntry[optionsText + 'title']
-                        });
-                    }
+                    option = utils.template(optgroupTmpl, {
+                        label: arrayEntry[optionsText],
+                        title: arrayEntry[optionsText + 'title']
+                    });
                     option = ko.utils.parseHtmlFragment(option)[0];
 
                 } else {
@@ -250,7 +246,7 @@ define([
 
                 // IE6 doesn't like us to assign selection to OPTION nodes before they're added to the document.
                 // That's why we first added them without selection. Now it's time to set the selection.
-                if (previousSelectedValues.length && newOptions.value) {
+                if (previousSelectedValues.length) {
                     isSelected = ko.utils.arrayIndexOf(
                         previousSelectedValues,
                         ko.selectExtensions.readValue(newOptions.value)
@@ -309,10 +305,6 @@ define([
 
                     if (disabled) {
                         obj.disabled = disabled;
-                    }
-
-                    if (option.hasOwnProperty('__disableTmpl')) {
-                        obj.__disableTmpl = option.__disableTmpl;
                     }
 
                     label = label.replace(nbspRe, '').trim();

@@ -11,15 +11,14 @@ define([
     'uiLayout',
     'mage/translate',
     'mageUtils',
-    'uiElement',
-    'jquery'
-], function (_, layout, $t, utils, Element, $) {
+    'uiElement'
+], function (_, layout, $t, utils, Element) {
     'use strict';
 
     return Element.extend({
         defaults: {
             template: 'ui/grid/search/search',
-            placeholder: 'Search by keyword',
+            placeholder: $t('Search by keyword'),
             label: $t('Keyword'),
             value: '',
             previews: [],
@@ -30,13 +29,11 @@ define([
             tracks: {
                 value: true,
                 previews: true,
-                inputValue: true,
-                focused: true
+                inputValue: true
             },
             imports: {
                 inputValue: 'value',
-                updatePreview: 'value',
-                focused: false
+                updatePreview: 'value'
             },
             exports: {
                 value: '${ $.provider }:params.search'
@@ -92,18 +89,6 @@ define([
         },
 
         /**
-         * Click To ScrollTop.
-         */
-        scrollTo: function ($data) {
-            $('html, body').animate({
-                scrollTop: 0
-            }, 'slow', function () {
-                $data.focused = false;
-                $data.focused = true;
-            });
-        },
-
-        /**
          * Resets input value to the last applied state.
          *
          * @returns {Search} Chainable.
@@ -117,7 +102,7 @@ define([
         /**
          * Applies search query.
          *
-         * @param {String} [value=inputValue] - If not specified, then
+         * @param {String} [value=inputValue] - If not specfied, then
          *      value of the input field will be used.
          * @returns {Search} Chainable.
          */

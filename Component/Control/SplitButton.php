@@ -3,16 +3,10 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
-
 namespace Magento\Ui\Component\Control;
 
-use Magento\Framework\App\ObjectManager;
-use Magento\Framework\Math\Random;
-use Magento\Framework\View\Element\Template\Context;
-use Magento\Framework\View\Helper\SecureHtmlRenderer;
-
 /**
- * Widget for standard button with a selection.
+ * Class SplitButton
  *
  * @method string getTitle
  * @method string getLabel
@@ -28,33 +22,7 @@ use Magento\Framework\View\Helper\SecureHtmlRenderer;
 class SplitButton extends Button
 {
     /**
-     * @var SecureHtmlRenderer
-     */
-    private $secureRenderer;
-
-    /**
-     * @var Random
-     */
-    private $random;
-
-    /**
-     * @inheritDoc
-     */
-    public function __construct(
-        Context $context,
-        array $data = [],
-        ?Random $random = null,
-        ?SecureHtmlRenderer $htmlRenderer = null
-    ) {
-        $random = $random ?? ObjectManager::getInstance()->get(Random::class);
-        $htmlRenderer = $htmlRenderer ?? ObjectManager::getInstance()->get(SecureHtmlRenderer::class);
-        parent::__construct($context, $data, $random, $htmlRenderer);
-        $this->random = $random;
-        $this->secureRenderer = $htmlRenderer;
-    }
-
-    /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function getTemplatePath()
     {
@@ -86,16 +54,6 @@ class SplitButton extends Button
     }
 
     /**
-     * Get main button's "id" attribute value.
-     *
-     * @return string
-     */
-    private function getButtonId(): string
-    {
-        return $this->getId() .'-button';
-    }
-
-    /**
      * Retrieve button attributes html
      *
      * @return string
@@ -118,18 +76,19 @@ class SplitButton extends Button
         }
 
         $attributes = [
-            'id' => $this->getButtonId(),
+            'id' => $this->getId() . '-button',
             'title' => $title,
             'class' => join(' ', $classes),
             'disabled' => $disabled,
+            'style' => $this->getStyle(),
         ];
 
-        if ($idHard = $this->getIdHard()) {
+        if (($idHard = $this->getIdHard())) {
             $attributes['id'] = $idHard;
         }
 
         //TODO perhaps we need to skip data-mage-init when disabled="disabled"
-        if ($dataAttribute = $this->getDataAttribute()) {
+        if (($dataAttribute = $this->getDataAttribute())) {
             $this->getDataAttributes($dataAttribute, $attributes);
         }
 
@@ -153,7 +112,7 @@ class SplitButton extends Button
             $title = $this->getLabel();
         }
 
-        if ($currentClass = $this->getClass()) {
+        if (($currentClass = $this->getClass())) {
             $classes[] = $currentClass;
         }
 
@@ -200,21 +159,6 @@ class SplitButton extends Button
     }
 
     /**
-     * Retrieve "id" attribute value for an option.
-     *
-     * @param array $option
-     * @return string
-     */
-    private function identifyOption(array $option): string
-    {
-        return isset($option['id'])
-            ? $this->getId() .'-' .$option['id']
-            : (isset($option['id_attribute']) ?
-                $option['id_attribute']
-                : $this->getId() .'-optId' .$this->random->getRandomString(10));
-    }
-
-    /**
      * Prepare option attributes
      *
      * @param array $option
@@ -227,9 +171,11 @@ class SplitButton extends Button
     protected function prepareOptionAttributes($option, $title, $classes, $disabled)
     {
         $attributes = [
-            'id' => $this->identifyOption($option),
+            'id' => isset($option['id']) ? $this->getId() . '-' . $option['id'] : '',
             'title' => $title,
             'class' => join(' ', $classes),
+            'onclick' => isset($option['onclick']) ? $option['onclick'] : '',
+            'style' => isset($option['style']) ? $option['style'] : '',
             'disabled' => $disabled,
         ];
 
@@ -255,11 +201,12 @@ class SplitButton extends Button
     {
         return $this->hasData('has_split') ? (bool)$this->getData('has_split') : true;
     }
+
     /**
      * Add data attributes to $attributes array
      *
      * @param array $data
-     * @param array $attributes
+     * @param array &$attributes
      * @return void
      */
     protected function getDataAttributes($data, &$attributes)
@@ -267,44 +214,5 @@ class SplitButton extends Button
         foreach ($data as $key => $attr) {
             $attributes['data-' . $key] = is_scalar($attr) ? $attr : json_encode($attr);
         }
-    }
-
-    /**
-     * @inheritDoc
-     */
-    protected function _beforeToHtml()
-    {
-        parent::_beforeToHtml();
-
-        /** @var array|null $options */
-        $options = $this->getOptions() ?? [];
-        foreach ($options as &$option) {
-            $option['id_attribute'] = $this->identifyOption($option);
-        }
-        $this->setOptions($options);
-
-        return $this;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getAfterHtml(): ?string
-    {
-        $afterHtml = parent::getAfterHtml();
-
-        /** @var array|null $options */
-        $options = $this->getOptions() ?? [];
-        foreach ($options as $option) {
-            $id = $this->identifyOption($option);
-            if (!empty($option['onclick'])) {
-                $afterHtml .= $this->secureRenderer->renderEventListenerAsTag('onclick', $option['onclick'], "#$id");
-            }
-            if (!empty($option['style'])) {
-                $afterHtml .= $this->secureRenderer->renderStyleAsTag($option['style'], "#$id");
-            }
-        }
-
-        return $afterHtml;
     }
 }

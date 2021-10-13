@@ -48,10 +48,6 @@ define([
                 params :
                 [params];
 
-            if (typeof message === 'function') {
-                message = message.call(rule);
-            }
-
             message = params.reduce(function (msg, param, idx) {
                 return msg.replace(new RegExp('\\{' + idx + '\\}', 'g'), param);
             }, message);
@@ -64,7 +60,7 @@ define([
     }
 
     /**
-     * Validates provided value by a specified set of rules.
+     * Validates provied value by a specfied set of rules.
      *
      * @param {(String|Object)} rules - One or many validation rules.
      * @param {*} value - Value to be checked.

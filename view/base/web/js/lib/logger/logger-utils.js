@@ -42,14 +42,14 @@ define([], function () {
      * Method that creates object of messages
      * @param {String} requested - log message that showing that request for class is started
      * @param {String} loaded - log message that show when requested class is loaded
-     * @param {String} failed - log message that show when requested class is failed
+     * @param {String} failded - log message that show when requested class is failed
      * @returns {Object}
      */
-    LogUtils.prototype.createMessages = function (requested, loaded, failed) {
+    LogUtils.prototype.createMessages = function (requested, loaded, failded) {
         return {
             requested: requested || '',
             loaded: loaded || '',
-            failed: failed || ''
+            failed: failded || ''
         };
     };
 
@@ -57,14 +57,14 @@ define([], function () {
      * Method that creates object of log levels
      * @param {String} requested - log message that showing that request for class is started
      * @param {String} loaded - log message that show when requested class is loaded
-     * @param {String} failed - log message that show when requested class is failed
+     * @param {String} failded - log message that show when requested class is failed
      * @returns {Object}
      */
-    LogUtils.prototype.createLevels = function (requested, loaded, failed) {
+    LogUtils.prototype.createLevels = function (requested, loaded, failded) {
         return {
             requested: requested || 'info',
             loaded: loaded || 'info',
-            failed: failed || 'warn'
+            failed: failded || 'warn'
         };
     };
 

@@ -45,8 +45,7 @@ define([
                 .observe([
                     'visible',
                     'disabled',
-                    'title',
-                    'childError'
+                    'title'
                 ]);
         },
 

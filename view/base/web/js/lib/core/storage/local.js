@@ -11,7 +11,7 @@ define([
     'use strict';
 
     var root = 'appData',
-        localStorage,
+        localStorage = window.localStorage,
         hasSupport,
         storage;
 
@@ -22,7 +22,6 @@ define([
         var key = '_storageSupported';
 
         try {
-            localStorage = window.localStorage;
             localStorage.setItem(key, 'true');
 
             if (localStorage.getItem(key) === 'true') {
@@ -52,7 +51,7 @@ define([
             },
 
             /**
-             * Retrieves specified item.
+             * Retrieves specfied item.
              *
              * @param {String} key - Key of the property to be retrieved.
              */
@@ -61,7 +60,7 @@ define([
             },
 
             /**
-             * Removes specified item.
+             * Removes specfied item.
              *
              * @param {String} key - Key of the property to be removed.
              */
@@ -80,7 +79,7 @@ define([
 
     /**
      * Extracts and parses data stored in localStorage by the
-     * key specified in 'root' variable.
+     * key specified in 'root' varaible.
      *
      * @returns {Object}
      */
@@ -115,8 +114,8 @@ define([
          *
          * @param {String} path - Path to the property.
          *
-         * @example Retrieving data.
-         *      localStorage =>
+         * @example Retrieveing data.
+         *      localStoarge =>
          *          'appData' => '
          *              "one": {"two": "three"}
          *          '
@@ -140,7 +139,7 @@ define([
          *
          * @example Setting data.
          *      storage.set('one.two', 'four');
-         *      => localStorage =>
+         *      => localStoarge =>
          *          'appData' => '
          *              "one": {"two": "four"}
          *          '
@@ -160,7 +159,7 @@ define([
          *
          * @example Removing data.
          *      storage.remove('one.two', 'four');
-         *      => localStorage =>
+         *      => localStoarge =>
          *          'appData' => '
          *              "one": {}
          *          '

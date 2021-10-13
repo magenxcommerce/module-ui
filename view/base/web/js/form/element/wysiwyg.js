@@ -18,10 +18,9 @@ define([
     'use strict';
 
     return Abstract.extend({
-        currentWysiwyg: undefined,
         defaults: {
             elementSelector: 'textarea',
-            suffixRegExpPattern: '${ $.wysiwygUniqueSuffix }',
+            value: '',
             $wysiwygEditorButton: '',
             links: {
                 value: '${ $.provider }:${ $.dataScope }'
@@ -54,36 +53,12 @@ define([
 
             // disable editor completely after initialization is field is disabled
             varienGlobalEvents.attachEventHandler('wysiwygEditorInitialized', function () {
-                if (!_.isUndefined(window.tinyMceEditors)) {
-                    this.currentWysiwyg = window.tinyMceEditors[this.wysiwygId];
-                }
-
                 if (this.disabled()) {
                     this.setDisabled(true);
                 }
             }.bind(this));
 
             return this;
-        },
-
-        /** @inheritdoc */
-        initConfig: function (config) {
-            var pattern = config.suffixRegExpPattern || this.constructor.defaults.suffixRegExpPattern;
-
-            pattern = pattern.replace(/\$/g, '\\$&');
-            config.content = config.content.replace(new RegExp(pattern, 'g'), this.getUniqueSuffix(config));
-            this._super();
-
-            return this;
-        },
-
-        /**
-         * Build unique id based on name, underscore separated.
-         *
-         * @param {Object} config
-         */
-        getUniqueSuffix: function (config) {
-            return config.name.replace(/(\.|-)/g, '_');
         },
 
         /**
@@ -141,9 +116,14 @@ define([
             }
 
             /* eslint-disable no-undef */
-            if (!_.isUndefined(this.currentWysiwyg) && this.currentWysiwyg.activeEditor()) {
-                this.currentWysiwyg.setEnabledStatus(!disabled);
-                this.currentWysiwyg.getPluginButtons().prop('disabled', disabled);
+            if (typeof wysiwyg !== 'undefined' && wysiwyg.activeEditor()) {
+                if (wysiwyg && disabled) {
+                    wysiwyg.setEnabledStatus(false);
+                    wysiwyg.getPluginButtons().prop('disabled', 'disabled');
+                } else if (wysiwyg) {
+                    wysiwyg.setEnabledStatus(true);
+                    wysiwyg.getPluginButtons().removeProp('disabled');
+                }
             }
         }
     });

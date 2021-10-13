@@ -13,7 +13,7 @@ class Config implements ConfigInterface
     /**
      * Return WYSIWYG configuration
      *
-     * @return array
+     * @return \Magento\Framework\DataObject
      */
     public function getConfig()
     {
