@@ -11,8 +11,6 @@ use Magento\Framework\View\Element\UiComponentInterface;
 use Magento\Ui\Component\AbstractComponent;
 
 /**
- * Column class for UI components
- *
  * @api
  * @since 100.0.2
  */
